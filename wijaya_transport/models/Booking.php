@@ -4,10 +4,39 @@ class Booking {
     public function __construct($pdo){ $this->pdo = $pdo; }
 
     public function create($data){
-        $stmt = $this->pdo->prepare("INSERT INTO bookings (user_id,car_id,start_date,end_date,total_price,status,created_at) VALUES (:user_id,:car_id,:start,:end,:total,:status,NOW())");
-        $ok = $stmt->execute([
-            'user_id'=>$data['user_id'],'car_id'=>$data['car_id'],'start'=>$data['start_date'],'end'=>$data['end_date'],'total'=>$data['total_price'],'status'=>$data['status'] ?? 'pending'
-        ]);
+        // Build insert dynamically to allow optional customer fields (name, phone, email)
+        $allowed = [
+            'user_id'=>'user_id', 'car_id'=>'car_id', 'start_date'=>'start_date', 'end_date'=>'end_date',
+            'total_price'=>'total_price', 'status'=>'status', 'customer_name'=>'customer_name',
+            'customer_phone'=>'customer_phone', 'customer_email'=>'customer_email'
+        ];
+
+        // get existing columns from bookings table
+        $colsInfo = $this->pdo->query("DESCRIBE bookings")->fetchAll(PDO::FETCH_ASSOC);
+        $existing = array_map(function($r){ return $r['Field']; }, $colsInfo);
+
+        $insertCols = [];
+        $placeholders = [];
+        $params = [];
+        foreach($allowed as $key => $col){
+            if(array_key_exists($key, $data) && in_array($col, $existing, true)){
+                $insertCols[] = $col;
+                $placeholders[] = ':' . $col;
+                $params[$col] = $data[$key];
+            }
+        }
+
+        // always include created_at if column exists
+        if(in_array('created_at', $existing, true)){
+            $insertCols[] = 'created_at';
+            $placeholders[] = 'NOW()';
+        }
+
+        if(empty($insertCols)) return false;
+
+        $sql = 'INSERT INTO bookings (' . implode(',', $insertCols) . ') VALUES (' . implode(',', $placeholders) . ')';
+        $stmt = $this->pdo->prepare($sql);
+        $ok = $stmt->execute($params);
         if($ok) return $this->pdo->lastInsertId();
         return false;
     }

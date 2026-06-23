@@ -23,10 +23,13 @@
       .then(r=>r.json())
       .then(data=>{
         if(data.token){
-          // load midtrans snap JS dynamically using client key placeholder
+          // load midtrans snap JS dynamically using client key from server config
+          const clientKey = '<?=htmlspecialchars((require __DIR__ . '/../../config/midtrans.php')['client_key'] ?? 'MIDTRANS_CLIENT_KEY')?>';
+          const isProd = <?=((require __DIR__ . '/../../config/midtrans.php')['is_production'] ?? false) ? 'true' : 'false'?>;
+          const snapUrl = isProd ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js';
           const s = document.createElement('script');
-          s.src = 'https://app.sandbox.midtrans.com/snap/snap.js';
-          s.setAttribute('data-client-key','MIDTRANS_CLIENT_KEY');
+          s.src = snapUrl;
+          s.setAttribute('data-client-key', clientKey);
           s.onload = ()=>{
             document.getElementById('msg').innerText = 'Ready to pay';
             const payBtn = document.getElementById('payBtn');

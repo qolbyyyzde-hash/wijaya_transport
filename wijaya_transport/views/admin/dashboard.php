@@ -7,8 +7,14 @@
 </head>
 <body>
   <div class="container">
+    <?php include __DIR__ . '/_nav.php'; ?>
     <h1>Admin Dashboard</h1>
     <p><a href="/wijaya_transport/admin.php?module=cars">Manage Cars</a></p>
+    <p>
+      Exports:
+      <a href="/wijaya_transport/controllers/export_controller.php?type=bookings">Export Bookings (CSV)</a> |
+      <a href="/wijaya_transport/controllers/export_controller.php?type=payments">Export Payments (CSV)</a>
+    </p>
   </div>
 </body>
 </html>

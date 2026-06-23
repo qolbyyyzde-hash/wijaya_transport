@@ -13,5 +13,10 @@ if($page === 'car'){
 	exit;
 }
 
+if($page === 'booking'){
+    include __DIR__ . '/controllers/public_booking_controller.php';
+    exit;
+}
+
 // default
 include __DIR__ . '/views/home.php';

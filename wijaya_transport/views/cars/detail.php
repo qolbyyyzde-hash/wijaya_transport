@@ -15,8 +15,10 @@
 
     <h2>Book this car</h2>
     <form action="/wijaya_transport/controllers/booking_controller.php" method="post">
+      <input type="hidden" name="csrf_token" value="<?=htmlspecialchars(generate_csrf_token())?>">
       <input type="hidden" name="car_id" value="<?=htmlspecialchars($car['id'])?>">
       <div><label>Name<input name="name" required></label></div>
+      <div><label>Email (opsional)<input name="email" type="email" placeholder="email@contoh.com"></label></div>
       <div><label>Phone<input name="phone"></label></div>
       <div><label>Start Date<input type="date" name="start_date" required></label></div>
       <div><label>End Date<input type="date" name="end_date" required></label></div>

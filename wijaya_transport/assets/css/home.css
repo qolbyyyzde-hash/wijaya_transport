@@ -1,0 +1,43 @@
+/* Home hero styles extracted from views/home.php */
+:root{--bg:#000;--overlay:linear-gradient(180deg,rgba(0,0,0,0.55),rgba(0,0,0,0.65));--cream:#efe8d6;--gold:#8B7500}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+.site-header{position:absolute;top:0;left:0;width:100%;z-index:100;background:transparent;padding:30px 50px}
+.nav{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;color:#fff}
+
+/* Header layout: left menu, centered brand, right search */
+.nav-left,.nav-center,.nav-right{display:flex;align-items:center}
+.nav-left{flex:0 0 auto}
+.nav-center{flex:1 1 auto;justify-content:center}
+.nav-right{flex:0 0 auto}
+
+.menu-btn{display:inline-flex;align-items:center;gap:10px;background:transparent;border:none;color:#fff;font-weight:700;letter-spacing:2px;font-size:13px;cursor:pointer;padding:6px}
+.menu-btn svg{display:block}
+.menu-text{display:inline-block}
+
+.brand{font-weight:700;letter-spacing:4px;color:#fff;font-size:14px}
+
+.search-btn{background:transparent;border:none;padding:6px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border-radius:6px}
+.search-btn svg{width:20px;height:20px}
+.search-btn:hover{opacity:0.85}
+
+.hero-viewport{height:100vh;position:relative;display:block;overflow:hidden;background:#000}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+.hero-overlay{position:absolute;inset:0;z-index:2;background:rgba(0,0,0,0.4)}
+
+.hero-content{position:relative;z-index:4;height:100%;display:flex;align-items:flex-end;padding:48px;box-sizing:border-box}
+.hero-left{max-width:720px}
+.brand-label{color:#fff;opacity:0.9;font-size:12px;letter-spacing:3px;margin-bottom:8px}
+.model-big{font-size:84px;line-height:0.9;color:#fff;margin:0;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+.cta-row{margin-top:22px}
+.btn-discover{background:var(--cream);color:#000;padding:14px 22px;border-radius:4px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:10px}
+.btn-discover .arrow{font-weight:900}
+
+.controls{position:absolute;right:28px;bottom:28px;display:flex;align-items:center;gap:16px;z-index:50}
+.progress-lines{display:flex;gap:6px;align-items:center}
+.prog{width:40px;height:4px;background:rgba(255,255,255,0.12);border-radius:4px}
+.prog.active{background:#fff;height:6px}
+.hex-pause{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:#fff}
+
+.hero-media{position:absolute;inset:0;z-index:1;object-fit:cover;width:100%;height:100%}
+
+@media(max-width:900px){.model-big{font-size:38px}.hero-left{max-width:100%}.cta-row{display:flex;gap:12px}}

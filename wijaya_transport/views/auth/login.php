@@ -11,6 +11,7 @@
     <h1>Admin Login</h1>
     <?php if(isset($_GET['err'])): ?><p style="color:#f88">Login gagal</p><?php endif; ?>
     <form action="/wijaya_transport/admin.php?module=auth&action=authenticate" method="post">
+      <input type="hidden" name="csrf_token" value="<?=htmlspecialchars($csrf)?>">
       <div><label>Email<input name="email" type="email" required></label></div>
       <div><label>Password<input name="password" type="password" required></label></div>
       <div style="margin-top:12px"><button class="btn btn-accent" type="submit">Login</button></div>

@@ -7,8 +7,10 @@
 </head>
 <body>
   <div class="container">
+    <?php include __DIR__ . '/../_nav.php'; ?>
     <h1>Add New Car</h1>
     <form action="/wijaya_transport/admin.php?module=cars&action=create" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" value="<?=htmlspecialchars($csrf)?>">
       <div><label>Brand<input name="brand" required></label></div>
       <div><label>Model<input name="model" required></label></div>
       <div><label>Year<input name="year" required></label></div>
