@@ -6,7 +6,12 @@ $carModel = new Car($pdo);
 $action = $_GET['action'] ?? 'list';
 
 if($action === 'list'){
-    $cars = $carModel->all();
+    $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+    if($search !== ''){
+        $cars = $carModel->search($search);
+    } else {
+        $cars = $carModel->all();
+    }
     include __DIR__ . '/../views/cars/list.php';
     exit;
 }

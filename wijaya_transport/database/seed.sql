@@ -47,6 +47,6 @@ CREATE TABLE IF NOT EXISTS payments (
 );
 
 INSERT INTO cars (brand,model,year,plate_number,price_per_day,image,status,created_at) VALUES
-('Lamborghini','Huracan','2020','B-1234-XYZ',3500000.00,'assets/media/car1.jpg','available',NOW()),
-('Toyota','Avanza','2019','B-5678-XYZ',500000.00,'assets/media/car2.jpg','available',NOW()),
-('Honda','Civic','2021','B-9999-XYZ',800000.00,'assets/media/car3.jpg','unavailable',NOW());
+('Lamborghini','Huracan','2020','B-1234-XYZ',3500000.00,'assets/media/huracan.png','available',NOW()),
+('Toyota','Avanza','2019','B-5678-XYZ',500000.00,'assets/media/avanza.png','available',NOW()),
+('Honda','Civic','2021','B-9999-XYZ',800000.00,'assets/media/civic.png','unavailable',NOW());

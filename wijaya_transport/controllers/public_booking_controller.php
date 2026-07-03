@@ -13,6 +13,7 @@ if($action === 'new'){
     // show a generic booking form where user can choose a car
     $cars = $carModel->all();
     $csrf = generate_csrf_token();
+    $selected = isset($_GET['car_id']) ? (int)$_GET['car_id'] : 0;
     include __DIR__ . '/../views/booking/new.php';
     exit;
 }

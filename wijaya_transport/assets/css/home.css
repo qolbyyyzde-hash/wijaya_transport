@@ -1,16 +1,19 @@
 /* Home hero styles extracted from views/home.php */
 :root{--bg:#000;--overlay:linear-gradient(180deg,rgba(0,0,0,0.55),rgba(0,0,0,0.65));--cream:#efe8d6;--gold:#8B7500}
 html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-.site-header{position:absolute;top:0;left:0;width:100%;z-index:100;background:transparent;padding:30px 50px}
-.nav{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;color:#fff}
+.site-header{position:absolute;top:0;left:0;width:100%;display:flex;justify-content:space-between;align-items:center;height:80px;padding:0 60px;box-sizing:border-box;z-index:100;background:transparent}
+.nav{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:1200px;margin:0 auto;color:#fff;height:100%}
 
 /* Header layout: left menu, centered brand, right search */
-.nav-left,.nav-center,.nav-right{display:flex;align-items:center}
+.nav-left,.nav-center,.nav-right{display:flex;align-items:center;height:100%}
 .nav-left{flex:0 0 auto}
 .nav-center{flex:1 1 auto;justify-content:center}
 .nav-right{flex:0 0 auto}
 
-.menu-btn{display:inline-flex;align-items:center;gap:10px;background:transparent;border:none;color:#fff;font-weight:700;letter-spacing:2px;font-size:13px;cursor:pointer;padding:6px}
+.menu-btn{display:inline-flex;align-items:center;gap:8px;background:transparent;border:none;color:#fff;font-weight:700;letter-spacing:2px;font-size:13px;cursor:pointer;margin:0;padding:0;position:relative;z-index:10;pointer-events:auto;transition:color .2s ease}
+.menu-btn::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;background:transparent;transition:background .2s ease}
+.menu-btn:hover{color:rgba(255,255,255,0.9)}
+.menu-btn:hover::after{background:rgba(255,255,255,0.35)}
 .menu-btn svg{display:block}
 .menu-text{display:inline-block}
 

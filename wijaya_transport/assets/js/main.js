@@ -25,4 +25,26 @@ document.addEventListener('DOMContentLoaded',function(){
       });
     });
   } catch(e){}
+
+  // Menu toggle logic for header menu button and sidebar dropdown
+  try{
+    const btn = document.querySelector('.menu-btn') || document.querySelector('.menu-btn-local') || document.getElementById('menuToggle');
+    const menuContainer = document.querySelector('.menu-dropdown') || document.querySelector('.sidebar-menu') || document.querySelector('.nav-menu');
+
+    if (btn && menuContainer) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        menuContainer.classList.toggle('active');
+        menuContainer.classList.toggle('show');
+        console.log('Tombol MENU berhasil merespons klik!');
+      });
+
+      document.addEventListener('click', function() {
+        menuContainer.classList.remove('active');
+        menuContainer.classList.remove('show');
+      });
+    }
+  } catch(e){}
 });

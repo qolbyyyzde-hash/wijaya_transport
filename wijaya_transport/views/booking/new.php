@@ -18,7 +18,7 @@
           <select name="car_id" required>
             <option value="">-- pilih mobil --</option>
             <?php foreach($cars as $c): ?>
-              <option value="<?=htmlspecialchars($c['id'])?>"><?=htmlspecialchars($c['brand'].' '.$c['model'].' (Rp '.number_format($c['price_per_day'],0,',','.').')')?></option>
+              <option value="<?=htmlspecialchars($c['id'])?>" <?=isset($selected) && $selected == $c['id'] ? 'selected' : ''?>><?=htmlspecialchars($c['brand'].' '.$c['model'].' (Rp '.number_format($c['price_per_day'],0,',','.').')')?></option>
             <?php endforeach; ?>
           </select>
         </div>

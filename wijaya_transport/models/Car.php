@@ -10,6 +10,13 @@ class Car {
         return $stmt->fetchAll();
     }
 
+    public function search($term){
+        $term = '%' . $term . '%';
+        $stmt = $this->pdo->prepare("SELECT DISTINCT * FROM cars WHERE brand LIKE :t OR model LIKE :t ORDER BY created_at DESC");
+        $stmt->execute(['t' => $term]);
+        return $stmt->fetchAll();
+    }
+
     public function find($id){
         $stmt = $this->pdo->prepare("SELECT * FROM cars WHERE id = :id LIMIT 1");
         $stmt->execute(['id'=>$id]);
