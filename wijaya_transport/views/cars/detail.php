@@ -6,61 +6,58 @@
   <title><?=htmlspecialchars($car['brand'].' '.$car['model'])?> — Detail</title>
   <link rel="stylesheet" href="/wijaya_transport/assets/css/style.css">
   <style>
-    body{margin:0;background:#fff;color:#111;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-    .detail-shell{min-height:100vh;padding:40px 24px 80px;position:relative;overflow-x:hidden}
-    .detail-back{display:inline-flex;align-items:center;gap:10px;color:#111;text-decoration:none;font-size:.95rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:32px}
-    .detail-back svg{width:16px;height:16px;stroke:#111}
-    .detail-hero{max-width:1240px;margin:0 auto;position:relative;z-index:1}
-    .detail-headline{position:relative;display:grid;grid-template-columns:1fr;gap:40px}
-    .model-mark{position:absolute;top:0;left:0;right:0;font-size:10rem;line-height:.95em;font-weight:800;text-transform:uppercase;letter-spacing:.15em;color:rgba(0,0,0,.04);pointer-events:none;user-select:none;z-index:0}
+    body{margin:0;background:#06070b;color:#f8fafc;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    .detail-shell{min-height:100vh;padding:110px 24px 80px;position:relative;overflow:hidden;background-color:#090a0f;color:#ffffff}
+    .detail-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(30px) brightness(.6) contrast(1.1);transform:scale(1.15);z-index:0}
+    .detail-overlay{position:absolute;inset:0;background:radial-gradient(circle at 80% 20%, rgba(15,23,42,0.4) 0%, rgba(5,7,10,0.85) 100%);z-index:1}
+    .detail-back{display:inline-flex;align-items:center;gap:10px;color:#cbd5e1;text-decoration:none;font-size:.95rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:32px;position:relative;z-index:2}
+    .detail-back svg{width:16px;height:16px;stroke:#cbd5e1}
+    .detail-hero{max-width:1240px;margin:0 auto;position:relative;z-index:2}
+    .detail-headline{display:grid;grid-template-columns:1fr;gap:40px}
     .detail-content{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
-    .viewer-panel{background:#ffffff;border-radius:24px;box-shadow:0 15px 40px rgba(0,0,0,.04);padding:38px;display:flex;justify-content:center;align-items:center;min-height:520px;overflow:hidden;position:relative}
-    .viewer-scene{width:100%;max-width:720px;height:420px;position:relative;perspective:1000px;display:flex;align-items:center;justify-content:center}
-    .viewer-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:8rem;font-weight:800;color:rgba(0,0,0,.03);pointer-events:none;user-select:none;white-space:nowrap;letter-spacing:.2em;z-index:0}
-    .viewer-floor-shadow{position:absolute;left:50%;bottom:48px;width:220px;height:78px;background:rgba(0,0,0,.08);border-radius:999px;filter:blur(18px);transform:translateX(-50%);z-index:1}
-    .viewer-card{width:100%;height:100%;border-radius:24px;background:#ffffff;display:flex;align-items:center;justify-content:center;overflow:hidden;transform-style:preserve-3d;transition:transform .18s ease-out, box-shadow .18s ease-out;box-shadow:0 12px 36px rgba(0,0,0,.06);will-change:transform;position:relative;z-index:2}
-    .viewer-card:hover{box-shadow:0 18px 46px rgba(0,0,0,.1)}
-    .viewer-card img{width:100%;height:100%;object-fit:contain;backface-visibility:hidden;pointer-events:none;transform:translateZ(50px);transition:transform .12s ease-out, filter .12s ease-out;filter:drop-shadow(0 12px 24px rgba(0,0,0,0.08))}
-    .viewer-card:hover img{transform:translateZ(70px)}
-    .viewer-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:#666666;font-size:.92rem;letter-spacing:.04em;text-transform:uppercase;z-index:2}
+    .viewer-panel{background:rgba(22,25,35,0.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;box-shadow:0 20px 45px rgba(0,0,0,0.35);padding:0;display:flex;justify-content:center;align-items:center;min-height:520px;overflow:hidden;position:relative}
+    .viewer-panel img{width:100%;height:100%;object-fit:cover;display:block}
     .info-panel{display:flex;flex-direction:column;gap:28px;justify-content:center}
-    .info-meta{font-size:.92rem;letter-spacing:.18em;text-transform:uppercase;color:#777;margin-bottom:12px}
-    .info-title{margin:0;font-size:3.4rem;line-height:.92;letter-spacing:.02em;text-transform:uppercase;color:#111;max-width:10ch;position:relative;z-index:1}
-    .info-copy{margin:0;color:#444;line-height:1.8;font-size:1rem;max-width:540px}
+    .info-meta{font-size:.92rem;letter-spacing:.18em;text-transform:uppercase;color:#f59e0b;margin-bottom:12px}
+    .info-title{margin:0;font-size:3.4rem;line-height:.92;letter-spacing:.02em;text-transform:uppercase;color:#ffffff;max-width:10ch;position:relative;z-index:1}
+    .info-copy{margin:0;color:#cbd5e1;line-height:1.8;font-size:1rem;max-width:540px}
     .spec-grid{display:grid;grid-template-columns:repeat(2,minmax(140px,1fr));gap:16px}
-    .spec-card{background:#f8f5ee;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:10px;box-shadow:0 18px 32px rgba(0,0,0,.04)}
-    .spec-label{font-size:.82rem;color:#666;text-transform:uppercase;letter-spacing:.14em}
-    .spec-value{font-size:1.35rem;font-weight:700;color:#111}
+    .spec-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:10px;box-shadow:0 18px 32px rgba(0,0,0,.16);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+    .spec-label{font-size:.82rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.14em}
+    .spec-value{font-size:1.15rem;font-weight:700;color:#ffffff}
     .book-row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-    .btn-cta{display:inline-flex;align-items:center;justify-content:center;padding:18px 30px;border-radius:999px;border:none;background:#111;color:#fff;font-size:1rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;box-shadow:0 18px 40px rgba(0,0,0,.15);transition:transform .18s ease,background .18s ease}
-    .btn-cta:hover{transform:translateY(-2px);background:#000}
-    .book-note{color:#666;font-size:.95rem;max-width:360px}
-    .viewer-overlay{position:absolute;inset:0;border-radius:36px;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.03)}
-    @media(max-width:980px){.detail-content{grid-template-columns:1fr;}.viewer-panel{min-height:420px;}.model-mark{font-size:7rem;}.info-title{font-size:2.8rem;}}
-    @media(max-width:680px){.detail-shell{padding:28px 18px 48px;} .viewer-scene{height:320px;} .model-mark{font-size:5rem;} .info-title{font-size:2.2rem;} .spec-grid{grid-template-columns:1fr;}}
+    .btn-cta{display:inline-flex;align-items:center;justify-content:center;padding:18px 30px;border-radius:999px;border:none;color:#fff;font-size:1rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;box-shadow:0 18px 40px rgba(0,0,0,.2);transition:transform .18s ease,background .18s ease,opacity .18s ease}
+    .btn-cta.available{background:linear-gradient(135deg, #f59e0b 0%, #d97706 100%);color:#000000}
+    .btn-cta.available:hover{transform:translateY(-2px);box-shadow:0 20px 45px rgba(245,158,11,0.35)}
+    .btn-cta.unavailable{background:rgba(255,255,255,0.12);color:#e2e8f0;border:1px solid rgba(255,255,255,0.16);box-shadow:none}
+    .btn-cta.unavailable:hover{transform:none;cursor:pointer;opacity:.95}
+    .book-note{color:#94a3b8;font-size:.95rem;max-width:360px}
+    .viewer-overlay{position:absolute;inset:0;border-radius:36px;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+    @media(max-width:980px){.detail-content{grid-template-columns:1fr;}.viewer-panel{min-height:420px;}.info-title{font-size:2.8rem;}}
+    @media(max-width:680px){.detail-shell{padding:28px 18px 48px;} .viewer-panel{min-height:320px;} .info-title{font-size:2.2rem;} .spec-grid{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
   <main class="detail-shell">
-    <div class="detail-hero">
+    <img src="/wijaya_transport/assets/media/temerario.jpg" alt="Background Blur" class="detail-bg">
+    <div class="detail-overlay"></div>
+    <?php $statusKey = strtolower(trim($car['status'] ?? 'available')); ?>
+  <?php $isAvailable = $statusKey === 'available'; ?>
+  <div class="detail-hero">
       <a class="detail-back" href="/wijaya_transport/index.php?page=cars" aria-label="Kembali ke katalog">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
         Kembali ke katalog
       </a>
       <div class="detail-headline">
-        <div class="model-mark"><?=htmlspecialchars($car['brand'].' '.$car['model'])?></div>
         <div class="detail-content">
-          <section class="viewer-panel" aria-label="360 degree car viewer">
-            <div class="viewer-scene" id="viewerScene">
-              <div class="viewer-watermark"><?=htmlspecialchars($car['brand'])?></div>
-              <div class="viewer-floor-shadow"></div>
-              <div class="viewer-card" id="viewerCard">
-                <?php $viewerImage = !empty($car['image']) ? '/wijaya_transport/' . ltrim($car['image'], '/') : '/wijaya_transport/assets/media/hero-1.svg'; ?>
-                <img id="viewerImage" src="<?=htmlspecialchars($viewerImage)?>" alt="<?=htmlspecialchars($car['brand'].' '.$car['model'])?>">
-              </div>
-              <div class="viewer-hint">Klik dan geser ke kiri / kanan untuk memutar</div>
-            </div>
-            <div class="viewer-overlay"></div>
+          <section class="viewer-panel" aria-label="Gambar detail mobil">
+            <?php if($isAvailable): ?>
+              <div style="position:absolute;top:24px;right:24px;padding:8px 14px;border-radius:999px;background:rgba(52,211,153,.15);color:#166534;font-weight:700;font-size:.82rem;z-index:3">Tersedia</div>
+            <?php else: ?>
+              <div style="position:absolute;top:24px;right:24px;padding:8px 14px;border-radius:999px;background:rgba(248,113,113,.17);color:#991b1b;font-weight:700;font-size:.82rem;z-index:3">Dipakai</div>
+            <?php endif; ?>
+            <?php $viewerImage = !empty($car['image']) ? '/wijaya_transport/' . ltrim($car['image'], '/') : '/wijaya_transport/assets/media/hero-1.svg'; ?>
+            <img src="<?=htmlspecialchars($viewerImage)?>" alt="<?=htmlspecialchars($car['brand'].' '.$car['model'])?>">
           </section>
 
           <section class="info-panel">
@@ -90,8 +87,7 @@
             </div>
 
             <div class="book-row">
-              <a class="btn-cta" href="/wijaya_transport/index.php?page=booking&action=new&car_id=<?=urlencode($car['id'])?>">BOOKING NOW</a>
-              <p class="book-note">Klik tombol untuk melanjutkan ke halaman pemesanan dan amankan mobil ini dengan cepat.</p>
+              <a class="btn-cta <?= $isAvailable ? 'available' : 'unavailable' ?>" href="<?= $isAvailable ? '/wijaya_transport/index.php?page=booking&action=new&car_id=' . urlencode($car['id']) : '#' ?>" data-available="<?= $isAvailable ? '1' : '0' ?>" data-car-name="<?=htmlspecialchars($car['brand'].' '.$car['model'])?>">BOOKING NOW</a>
             </div>
           </section>
         </div>
@@ -101,64 +97,14 @@
 
   <script>
     (function(){
-      const viewerCard = document.getElementById('viewerCard');
-      const viewerScene = document.getElementById('viewerScene');
-      const viewerImage = document.getElementById('viewerImage');
-      let isDragging = false;
-      let startX = 0;
-      let startY = 0;
-      let currentRotation = 0;
-      let currentTilt = 0;
-
-      function getImageSources(){
-        const src = document.getElementById('viewerImage').src;
-        return [src, src, src, src];
+      const bookingButton = document.querySelector('.btn-cta[data-available="0"]');
+      if(bookingButton){
+        bookingButton.addEventListener('click', function(event){
+          event.preventDefault();
+          const carName = bookingButton.getAttribute('data-car-name') || 'mobil ini';
+          alert(`Maaf, ${carName} saat ini tidak tersedia (sedang dipakai). Silakan pilih mobil lain yang tersedia.`);
+        });
       }
-
-      const frames = getImageSources();
-      let frameIndex = 0;
-
-      function updateViewer(angle, tilt = 0){
-        currentRotation = angle;
-        currentTilt = tilt;
-        viewerCard.style.transform = `rotateY(${angle}deg) rotateX(${tilt}deg)`;
-        viewerImage.style.transform = `translateZ(70px)`;
-        const index = Math.floor((angle % 360 + 360) % 360 / 90) % frames.length;
-        if(frames[index]){
-          document.getElementById('viewerImage').src = frames[index];
-        }
-      }
-
-      function pointerDown(event){
-        isDragging = true;
-        startX = event.clientX || event.touches && event.touches[0].clientX;
-        startY = event.clientY || event.touches && event.touches[0].clientY;
-        viewerCard.style.transition = 'none';
-      }
-
-      function pointerMove(event){
-        if(!isDragging) return;
-        const x = event.clientX || event.touches && event.touches[0].clientX;
-        const y = event.clientY || event.touches && event.touches[0].clientY;
-        const deltaX = x - startX;
-        const deltaY = y - startY;
-        updateViewer(currentRotation + deltaX * 0.35, Math.max(-8, Math.min(8, currentTilt + deltaY * 0.05)));
-        startX = x;
-        startY = y;
-      }
-
-      function pointerUp(){
-        if(!isDragging) return;
-        isDragging = false;
-        viewerCard.style.transition = 'transform .25s ease-out';
-      }
-
-      viewerScene.addEventListener('mousedown', pointerDown);
-      viewerScene.addEventListener('mousemove', pointerMove);
-      window.addEventListener('mouseup', pointerUp);
-      viewerScene.addEventListener('touchstart', pointerDown, {passive:true});
-      viewerScene.addEventListener('touchmove', pointerMove, {passive:true});
-      window.addEventListener('touchend', pointerUp);
     })();
   </script>
 </body>

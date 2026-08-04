@@ -100,6 +100,18 @@ if($action === 'update' && $_SERVER['REQUEST_METHOD'] === 'POST'){
     exit;
 }
 
+if($action === 'toggle_status' && $_SERVER['REQUEST_METHOD'] === 'POST'){
+    $id = $_POST['id'] ?? null;
+    $status = in_array($_POST['status'] ?? '', ['available','unavailable'], true) ? $_POST['status'] : 'available';
+    $token = $_POST['csrf_token'] ?? '';
+    if(!verify_csrf_token($token)){ header('Location: /wijaya_transport/admin.php?module=cars&err=csrf'); exit; }
+    if($id){
+        $carModel->update($id, ['status' => $status]);
+    }
+    header('Location: /wijaya_transport/admin.php?module=cars');
+    exit;
+}
+
 if($action === 'delete'){
     if($_SERVER['REQUEST_METHOD'] !== 'POST'){
         http_response_code(405); echo 'Method not allowed'; exit;

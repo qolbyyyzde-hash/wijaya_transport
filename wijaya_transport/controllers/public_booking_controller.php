@@ -21,10 +21,11 @@ if($action === 'new'){
 if($action === 'confirmation'){
     $booking_id = isset($_GET['booking_id']) ? (int)$_GET['booking_id'] : 0;
     if(!$booking_id){ http_response_code(400); echo 'Missing booking id'; exit; }
-    $stmt = $pdo->prepare('SELECT b.*, c.brand, c.model, c.price_per_day FROM bookings b JOIN cars c ON b.car_id = c.id WHERE b.id = :id LIMIT 1');
+    $stmt = $pdo->prepare('SELECT b.*, c.brand, c.model, c.price_per_day, p.payment_method, p.proof_image, p.status AS payment_status FROM bookings b JOIN cars c ON b.car_id = c.id LEFT JOIN payments p ON p.booking_id = b.id WHERE b.id = :id LIMIT 1');
     $stmt->execute(['id'=>$booking_id]);
     $booking = $stmt->fetch();
     if(!$booking){ http_response_code(404); echo 'Booking not found'; exit; }
+    $csrf = generate_csrf_token();
     include __DIR__ . '/../views/booking/confirmation.php';
     exit;
 }

@@ -10,9 +10,21 @@ class Car {
         return $stmt->fetchAll();
     }
 
+    public function available(){
+        $stmt = $this->pdo->query("SELECT * FROM cars WHERE status = 'available' ORDER BY created_at DESC");
+        return $stmt->fetchAll();
+    }
+
     public function search($term){
         $term = '%' . $term . '%';
         $stmt = $this->pdo->prepare("SELECT DISTINCT * FROM cars WHERE brand LIKE :t OR model LIKE :t ORDER BY created_at DESC");
+        $stmt->execute(['t' => $term]);
+        return $stmt->fetchAll();
+    }
+
+    public function searchAvailable($term){
+        $term = '%' . $term . '%';
+        $stmt = $this->pdo->prepare("SELECT DISTINCT * FROM cars WHERE status = 'available' AND (brand LIKE :t OR model LIKE :t) ORDER BY created_at DESC");
         $stmt->execute(['t' => $term]);
         return $stmt->fetchAll();
     }

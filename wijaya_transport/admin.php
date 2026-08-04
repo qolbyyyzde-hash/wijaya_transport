@@ -13,6 +13,11 @@ if($module === 'auth'){
 require_once __DIR__ . '/middleware/auth.php';
 require_admin();
 
+if($module === 'dashboard'){
+    include __DIR__ . '/controllers/dashboard_controller.php';
+    exit;
+}
+
 if($module === 'cars'){
     include __DIR__ . '/controllers/car_controller.php';
     exit;
@@ -23,5 +28,5 @@ if($module === 'payments'){
     exit;
 }
 
-// Simple admin dashboard placeholder
-include __DIR__ . '/views/admin/dashboard.php';
+// Fallback to dashboard
+include __DIR__ . '/controllers/dashboard_controller.php';

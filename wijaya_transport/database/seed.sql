@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS cars (
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(150),
+  username VARCHAR(100) UNIQUE,
   email VARCHAR(150) UNIQUE,
   password VARCHAR(255),
   phone VARCHAR(50),
@@ -24,6 +25,9 @@ CREATE TABLE IF NOT EXISTS users (
   role VARCHAR(50) DEFAULT 'user',
   created_at DATETIME
 );
+
+INSERT INTO users (name,username,email,password,phone,address,role,created_at) VALUES
+('Administrator','admin','admin@example.test','$2y$10$q.UOcbQe3DiPs6hTA8lAPeqZA44EN9AQNxXRbxwDnrayLOOfBZr8a',NULL,NULL,'admin',NOW());
 
 CREATE TABLE IF NOT EXISTS bookings (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -43,7 +47,8 @@ CREATE TABLE IF NOT EXISTS payments (
   payment_method VARCHAR(100),
   amount DECIMAL(12,2),
   status VARCHAR(50),
-  payment_date DATETIME
+  payment_date DATETIME,
+  proof_image VARCHAR(255)
 );
 
 INSERT INTO cars (brand,model,year,plate_number,price_per_day,image,status,created_at) VALUES

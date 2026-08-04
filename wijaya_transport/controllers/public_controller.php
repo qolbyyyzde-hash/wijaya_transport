@@ -8,8 +8,10 @@ $action = $_GET['action'] ?? 'list';
 if($action === 'list'){
     $search = isset($_GET['search']) ? trim($_GET['search']) : '';
     if($search !== ''){
+        // search all cars (show results even if not available) so UI can show unavailable state
         $cars = $carModel->search($search);
     } else {
+        // list all cars and let the view decide availability badge/state
         $cars = $carModel->all();
     }
     include __DIR__ . '/../views/cars/list.php';

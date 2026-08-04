@@ -10,6 +10,16 @@ $userModel = new User($pdo);
 $action = $_GET['action'] ?? 'login';
 
 if($action === 'login'){
+    // Create a fallback default admin account if no admin exists yet.
+    if(!$userModel->findAdmin()){
+        $userModel->create([
+            'name' => 'Administrator',
+            'username' => 'admin',
+            'email' => 'admin@example.test',
+            'password' => password_hash('admin123', PASSWORD_DEFAULT),
+            'role' => 'admin'
+        ]);
+    }
     $csrf = generate_csrf_token();
     include __DIR__ . '/../views/auth/login.php';
     exit;
@@ -17,9 +27,9 @@ if($action === 'login'){
 
 if($action === 'authenticate' && $_SERVER['REQUEST_METHOD'] === 'POST'){
     if(!verify_csrf_token($_POST['csrf_token'] ?? '')){ header('Location: /wijaya_transport/admin.php?module=auth&action=login&err=csrf'); exit; }
-    $email = $_POST['email'] ?? '';
+    $identifier = trim((string)($_POST['username'] ?? ''));
     $password = $_POST['password'] ?? '';
-    $user = $userModel->findByEmail($email);
+    $user = $userModel->findByIdentifier($identifier);
     if($user && password_verify($password, $user['password'])){
         $_SESSION['user'] = ['id'=>$user['id'],'name'=>$user['name'],'role'=>$user['role']];
         header('Location: /wijaya_transport/admin.php');

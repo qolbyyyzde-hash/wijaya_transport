@@ -8,7 +8,10 @@ class Booking {
         $allowed = [
             'user_id'=>'user_id', 'car_id'=>'car_id', 'start_date'=>'start_date', 'end_date'=>'end_date',
             'total_price'=>'total_price', 'status'=>'status', 'customer_name'=>'customer_name',
-            'customer_phone'=>'customer_phone', 'customer_email'=>'customer_email'
+            'customer_phone'=>'customer_phone', 'customer_email'=>'customer_email',
+            'name'=>'name', 'phone'=>'phone', 'whatsapp'=>'whatsapp',
+            'driver_option'=>'driver_option', 'pickup_option'=>'pickup_option',
+            'foto_ktp'=>'foto_ktp', 'foto_sim'=>'foto_sim'
         ];
 
         // get existing columns from bookings table
